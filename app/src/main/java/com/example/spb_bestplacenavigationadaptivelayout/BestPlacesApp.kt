@@ -1,8 +1,13 @@
 package com.example.spb_bestplacenavigationadaptivelayout
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -54,26 +59,13 @@ fun BestPlacesApp(
         backStackEntry?.destination?.route ?: PlacesScreens.Category.name
     )
 
-    val contentType: PlacesContentType
-    when (windowSize) {
-        WindowWidthSizeClass.Compact -> {
-            contentType = PlacesContentType.ListOnly
-        }
-        WindowWidthSizeClass.Medium -> {
-            contentType = PlacesContentType.ListAndDetail
-        }
-        WindowWidthSizeClass.Expanded -> {
-            contentType = PlacesContentType.ListAndDetail
-        }
-        else -> {
-            contentType = PlacesContentType.ListOnly
-        }
-    }
-
     Scaffold(
         topBar = {
             AppBar(
-                currentScreen = currentScreen
+                currentScreen = currentScreen,
+                onBackButtonClick = {navController.navigateUp()},
+                windowSize = windowSize,
+                canNavigateBack = navController.previousBackStackEntry != null,
             )
         }
     ) { innerPadding ->
@@ -92,24 +84,7 @@ fun BestPlacesApp(
                     }
                 )
             }
-            if (contentType == PlacesContentType.ListAndDetail) {
-                composable(route = PlacesScreens.Places.name) {
-                    PlacesScreenAndDetail(
-                        places = PlacesDataProvider.allPlaces.filter { it.placesCategory == uiState.category },
-                        onNameClick = {
-                            viewModel.pickPlace(it)
-                        },
-                        onClick = {
-                            navController.popBackStack(
-                                PlacesScreens.Category.name,
-                                inclusive = false
-                            )
-                        },
-                        uiState = uiState
-                    )
-                }
-            }
-            else{
+            if (windowSize == WindowWidthSizeClass.Compact) {
                 composable(route = PlacesScreens.Places.name) {
                     PlacesScreenListOnly(
                         places = PlacesDataProvider.allPlaces.filter { it.placesCategory == uiState.category },
@@ -128,6 +103,23 @@ fun BestPlacesApp(
                     )
                 }
             }
+            else{
+                composable(route = PlacesScreens.Places.name) {
+                    PlacesScreenAndDetail(
+                        places = PlacesDataProvider.allPlaces.filter { it.placesCategory == uiState.category },
+                        onNameClick = {
+                            viewModel.pickPlace(it)
+                        },
+                        onClick = {
+                            navController.popBackStack(
+                                PlacesScreens.Category.name,
+                                inclusive = false
+                            )
+                        },
+                        uiState = uiState
+                    )
+                }
+            }
         }
     }
 }
@@ -136,13 +128,29 @@ fun BestPlacesApp(
 @Composable
 fun AppBar(
     currentScreen: PlacesScreens,
+    canNavigateBack : Boolean,
     modifier: Modifier = Modifier,
+    onBackButtonClick: () -> Unit,
+    windowSize: WindowWidthSizeClass
 ) {
+    val isShowingBackButton : Boolean = windowSize == WindowWidthSizeClass.Compact
     TopAppBar(
         title = { Text(stringResource(currentScreen.title))  },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
+        navigationIcon = if (isShowingBackButton && canNavigateBack) {
+            {
+                IconButton(onClick = onBackButtonClick) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.Back_Button)
+                    )
+                }
+            }
+        } else {
+            { Box {} }
+        },
         modifier = modifier,
     )
 }
