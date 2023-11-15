@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,38 +26,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.spb_bestplacenavigationadaptivelayout.PlacesContentType
 import com.example.spb_bestplacenavigationadaptivelayout.R
 import com.example.spb_bestplacenavigationadaptivelayout.data.Place
 import com.example.spb_bestplacenavigationadaptivelayout.data.PlacesDataProvider.allPlaces
 import com.example.spb_bestplacenavigationadaptivelayout.ui.theme.SPb_BestPlaceNavigationAdaptiveLayoutTheme
-
-//@Composable
-//fun PlacesScreen(
-//    contentType: PlacesContentType,
-//    places: List<Place>,
-//    onNameClick: (Place) -> Unit,
-//    modifier: Modifier = Modifier,
-//    contentPadding: PaddingValues = PaddingValues(0.dp),
-//    onClick: () -> Unit,
-//    uiState: SpbBestPlacesUiState,
-//){
-//    if (contentType == PlacesContentType.ListAndDetail)
-//        PlacesScreenAndDetail(
-//            places = places,
-//            onNameClick = onNameClick,
-//            onClick = onClick,
-//            uiState = uiState,
-//            modifier = modifier
-//        )
-//    else
-//        PlacesScreenListOnly(
-//            places = places,
-//            onNameClick = onNameClick,
-//            modifier = modifier,
-//            contentPadding = contentPadding
-//        )
-//}
 
 @Composable
 fun PlacesScreenListOnly(
@@ -176,7 +147,6 @@ fun SportsListAndDetailPreview() {
                 onClick = {},
                 uiState = SpbBestPlacesUiState(
                     R.string.CategoryParks,
-//                    R.string.CategoryParks_PlaceName1,
                     R.string.CategoryParks_PlaceBody1,
                     R.drawable.picture1,
                     R.string.CategoryParks_Address1,

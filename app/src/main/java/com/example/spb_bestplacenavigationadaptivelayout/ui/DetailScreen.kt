@@ -95,7 +95,6 @@ fun DetailScreenPreview(){
         DetailScreen(
             uiState = SpbBestPlacesUiState(
                 R.string.CategoryParks,
-//                R.string.CategoryParks_PlaceName1,
                 R.string.CategoryParks_PlaceBody1,
                 R.drawable.picture1,
                 R.string.CategoryParks_Address1,),

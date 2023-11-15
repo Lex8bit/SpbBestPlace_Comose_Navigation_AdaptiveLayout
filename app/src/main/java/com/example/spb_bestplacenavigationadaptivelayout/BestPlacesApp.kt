@@ -37,14 +37,6 @@ enum class PlacesScreens(@StringRes val title: Int) {
     Description(title = R.string.Description)
 }
 
-/**
- * Content shown depending on size and state of device.
- */
-enum class PlacesContentType {
-    ListOnly, ListAndDetail
-}
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BestPlacesApp(

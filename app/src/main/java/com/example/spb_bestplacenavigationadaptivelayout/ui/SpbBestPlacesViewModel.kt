@@ -31,7 +31,6 @@ class SpbBestPlacesViewModel : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(
                 image = place.image,
-//                place = place.placesName,
                 details = place.placesDescription,
                 address = place.placesAddress
             )
